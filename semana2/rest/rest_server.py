@@ -17,12 +17,14 @@ class RESTRequestHandler(BaseHTTPRequestHandler):
             self.send_header("Content-type", "application/json")
             self.end_headers()
             self.wfile.write(json.dumps(estudiantes).encode("utf-8"))
+            
         elif self.path == "/eliminar_estudiante":
             self.send_response(201)
             self.send_header("Content-type", "application/json")
             self.end_headers()
             estudiantes.clear()
             self.wfile.write(json.dumps(estudiantes).encode("utf-8"))
+            
         elif self.path.startswith("/buscar_estudiante_id/"):
             id = int(self.path.split("/")[-1])
             estudiante = next(
@@ -34,6 +36,34 @@ class RESTRequestHandler(BaseHTTPRequestHandler):
                 self.send_header("Content-type", "application/json")
                 self.end_headers()
                 self.wfile.write(json.dumps(estudiante).encode("utf-8"))
+        
+        # ---> Tarea Rest
+        elif self.path == "/buscar_nombre":
+            estudiantes_P = [estudiante for estudiante in estudiantes if estudiante["nombre"].startswitch("P")]
+            self.send_response(200)
+            self.send_header("Content-type", "application/json")
+            self.end_headers()
+            self.wfile.write(json.dumps(estudiante).encode("utf-8"))
+            
+        elif self.path == "/contar_carreras":
+            count = {}
+            for estudiante in estudiantes:
+                carrera = estudiante["carrera"]
+                count[carrera] = count.get(carrera,0)
+            self.send_response(200)
+            self.send_header("Content-type", "application/json")
+            self.end_headers()
+            self.wfile.write(json.dumps(estudiante).encode("utf-8"))
+        
+        elif self.path == "/total_estudiantes":
+            total = len(estudiantes)
+            self.send_response(200)
+            self.send_header("Content-type", "application/json")
+            self.end_headers()
+            self.wfile.write(json.dumps({"total_estudiantes": total}).encode("utf-8"))
+            
+        # ======================================
+        
         else:
             self.send_response(404)
             self.send_header("Content-type", "application/json")

@@ -12,9 +12,9 @@ print()
 # POST agrega un nuevo estudiante por la ruta /agrega_estudiante
 ruta_post_agrega_estudiante = url + "agrega_estudiante"
 nuevo_estudiante = {
-    "nombre": "Juanito",
-    "apellido": "Pérez",
-    "carrera": "Ingeniería Agronómica",
+    "nombre": "Araceli",
+    "apellido": "Alberto",
+    "carrera": "Informatica",
 }
 post_response_agrega_estudiante = requests.post(url=ruta_post_agrega_estudiante, json=nuevo_estudiante)
 print("POST /agrega_estudiante:")
@@ -46,9 +46,9 @@ print()
 ruta_post_actualizar_estudiante = url + "actualizar_estudiante"
 estudiante_actualizado = {
     "id": 1,
-    "nombre": "Juan",
-    "apellido": "Pérez",
-    "carrera": "Ingeniería Agronómica",
+    "nombre": "Araceli",
+    "apellido": "Alberto",
+    "carrera": "Informatica",
 }
 actualizar_response = requests.post(url=ruta_post_actualizar_estudiante, json=estudiante_actualizado)
 print("POST /actualizar_estudiante:")
