@@ -4,6 +4,18 @@ from pysimplesoap.server import SoapDispatcher, SOAPHandler
 def saludar(nombre):
     return "Hola, {}!".format(nombre)
 
+# ----> Tarea de Soap <----
+
+def sumar(a,b):
+    return "la suma es {}".format(a+b)
+
+def palindromo(palabra):
+    palabra = palabra.lower()
+    if palabra == palabra[::-1]:
+        print(f"'{palabra}' es un palíndromo.")
+    else:
+        print(f"'{palabra}' no es un palíndromo.")
+
 #ruta para consultar
 dispatcher = SoapDispatcher(
     "ejemplo-soap-server",
