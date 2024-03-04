@@ -8,6 +8,13 @@ estudiantes = [
         "apellido": "Alberto",
         "carrera": "Informatica",
     },
+    
+    {
+        "id":2,
+        "nombre": "Pablo",
+        "apellido": "Alberto",
+        "carrera": "Informatica",
+    },
 ],
 
 class RESTRequestHandler(BaseHTTPRequestHandler):
@@ -18,32 +25,20 @@ class RESTRequestHandler(BaseHTTPRequestHandler):
             self.end_headers()
             self.wfile.write(json.dumps(estudiantes).encode("utf-8"))
             
-        elif self.path == "/eliminar_estudiante":
-            self.send_response(201)
-            self.send_header("Content-type", "application/json")
-            self.end_headers()
-            estudiantes.clear()
-            self.wfile.write(json.dumps(estudiantes).encode("utf-8"))
-            
-        elif self.path.startswith("/buscar_estudiante_id/"):
-            id = int(self.path.split("/")[-1])
-            estudiante = next(
-                (estudiante for estudiante in estudiantes if estudiante["id"] == id),
-                None,
-            )
-            if estudiante:
-                self.send_response(200)
-                self.send_header("Content-type", "application/json")
-                self.end_headers()
-                self.wfile.write(json.dumps(estudiante).encode("utf-8"))
+        # elif self.path == "/eliminar_estudiante":
+        #     self.send_response(201)
+        #     self.send_header("Content-type", "application/json")
+        #     self.end_headers()
+        #     estudiantes.clear()
+        #     self.wfile.write(json.dumps(estudiantes).encode("utf-8"))
         
         # ---> Tarea Rest
         elif self.path == "/buscar_nombre":
-            estudiantes_P = [estudiante for estudiante in estudiantes if estudiante["nombre"].startswitch("P")]
+            estudiantes_P = [estudiante["nombre"] for estudiante in estudiantes if estudiante["nombre"].startswith("P")]
             self.send_response(200)
             self.send_header("Content-type", "application/json")
             self.end_headers()
-            self.wfile.write(json.dumps(estudiante).encode("utf-8"))
+            self.wfile.write(json.dumps(estudiantes_P).encode("utf-8"))
             
         elif self.path == "/contar_carreras":
             count = {}
@@ -53,7 +48,7 @@ class RESTRequestHandler(BaseHTTPRequestHandler):
             self.send_response(200)
             self.send_header("Content-type", "application/json")
             self.end_headers()
-            self.wfile.write(json.dumps(estudiante).encode("utf-8"))
+            self.wfile.write(json.dumps(count).encode("utf-8"))
         
         elif self.path == "/total_estudiantes":
             total = len(estudiantes)
@@ -81,21 +76,21 @@ class RESTRequestHandler(BaseHTTPRequestHandler):
             self.send_header("Content-type", "application/json")
             self.end_headers()
             self.wfile.write(json.dumps(estudiantes).encode("utf-8"))
-        elif self.path == "/actualizar_estudiante":
-            content_length = int(self.headers["Content-Length"])
-            post_data = self.rfile.read(content_length)
-            post_data = json.loads(post_data.decode("utf-8"))
-            id = post_data["id"]
-            estudiante = next(
-                (estudiante for estudiante in estudiantes if estudiante["id"] == id),
-                None,
-            )
-            if estudiante:
-                estudiante.update(post_data)
-                self.send_response(201)
-                self.send_header("Content-type", "application/json")
-                self.end_headers()
-                self.wfile.write(json.dumps(estudiantes).encode("utf-8"))
+        # elif self.path == "/actualizar_estudiante":
+        #     content_length = int(self.headers["Content-Length"])
+        #     post_data = self.rfile.read(content_length)
+        #     post_data = json.loads(post_data.decode("utf-8"))
+        #     id = post_data["id"]
+        #     estudiante = next(
+        #         (estudiante for estudiante in estudiantes if estudiante["id"] == id),
+        #         None,
+        #     )
+        #     if estudiante:
+        #         estudiante.update(post_data)
+        #         self.send_response(201)
+        #         self.send_header("Content-type", "application/json")
+        #         self.end_headers()
+        #         self.wfile.write(json.dumps(estudiantes).encode("utf-8"))
         else:
             self.send_response(404)
             self.send_header("Content-type", "application/json")
