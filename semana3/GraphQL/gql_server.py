@@ -1,25 +1,29 @@
 from http.server import HTTPServer, BaseHTTPRequestHandler
-#HTTPServer -> 
-#BaseHTTPRequestHandler --> resolver las solicitudes 
 import json # intecambio de datos
 
 from graphene import ObjectType, String, Int, List, Schema
 
-#
-class Query(ObjectType): # Query = Consulta
-    hello = String()
-
-    def resolve_hello(root, info):  #la misma variable!! root = el servidor, info = status
-        return "Hola Andy"
-
-class Query(ObjectType): # Query = Consulta
-    goodbye = String()
-
-    def resolve_goodbye(root, info):  #la misma variable!! root = el servidor, info = status
-        return "Bye Bye"
-#
+class Estudiante(ObjectType):
+    id = Int()
+    nombre = String()
+    apellido = String()
+    carrera = String()
     
-Schema = Schema(query=Query)
+estudiantes = [
+    Estudiante(
+        id=1, nombre="Pedrito", apellido="García", carrera="Ingeniería de Sistemas"
+    ),
+    Estudiante(id=2, nombre="Jose", apellido="Lopez", carrera="Arquitectura"),
+]
+
+class Query(ObjectType):
+    estudiantes = List(estudiantes)
+    def resolve_estudiantes(root,info):
+        print(estudiantes)
+        return estudiantes
+    
+
+schema = Schema(query=Query)
 
 class GraphQLRequestHandler(BaseHTTPRequestHandler):
     def response_handler(self, status, data):
@@ -33,16 +37,16 @@ class GraphQLRequestHandler(BaseHTTPRequestHandler):
             content_length = int(self.headers["Content-Length"])
             data = self.rfile.read(content_length)
             data = json.loads(data.decode("utf-8"))
-            result = Schema.execute(data["query"]) #
+            result = schema.execute(data["query"])
             self.response_handler(200, result.data)
         else:
             self.response_handler(404, {"Error": "Ruta no existente"})
-    #acceder a diccionario> clave valor
-            
+
+
 def run_server(port=8000):
     try:
         server_address = ("", port)
-        httpd = HTTPServer(server_address, GraphQLRequestHandler) #dirrecion, clase
+        httpd = HTTPServer(server_address, GraphQLRequestHandler)
         print(f"Iniciando servidor web en http://localhost:{port}/")
         httpd.serve_forever()
     except KeyboardInterrupt:
@@ -50,8 +54,5 @@ def run_server(port=8000):
         httpd.socket.close()
 
 
-if __name__ == "__main__": #.\server.py
+if __name__ == "__main__":
     run_server()
-
-#501 error del servidor
-    
