@@ -118,3 +118,4 @@ if __name__ == "__main__":
     run_server()
 
 # set-ExecutionPolicy Unrestricted -Scope Process
+#.\venv\Scripts\activate
