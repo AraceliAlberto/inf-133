@@ -17,7 +17,7 @@ class Query(ObjectType): # Query = Consulta
 
     def resolve_goodbye(root, info):  #la misma variable!! root = el servidor, info = status
         return "Bye Bye"
-#
+
     
 Schema = Schema(query=Query)
 
