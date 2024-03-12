@@ -11,15 +11,19 @@ class Estudiante(ObjectType):
     
 class Query(ObjectType):
     estudiantes = List(Estudiante)
+    #---------------------------------------------------
     estudiante_por_id = Field(Estudiante, id=Int())
     estudiante_por_carrera = Field(Estudiante, carrera=String())
 
+    def resolve_estudiantes(root, info):
+        return estudiantes
+    
+#---------------------------------------------------
     def resolve_estudiante_por_id(root, info, id):
         for estudiante in estudiantes:
             if estudiante.id == id:
                 return estudiante
         return None
-    
     
     def resolve_estudiante_por_carrera(root, info, carrera):
         for estudiante in estudiantes:
