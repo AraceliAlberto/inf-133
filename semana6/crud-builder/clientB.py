@@ -1,6 +1,6 @@
 import requests
 
-url = "http://localhost:8000/Tacos"
+url = "http://localhost:8000/tacos"
 headers = {'Content-type': 'application/json'}
 
 # GET /pizzas
@@ -8,7 +8,7 @@ response = requests.get(url)
 print(response.json())
 
 # POST /pizzas
-print("post Taco")
+print("\npost Taco")
 mi_taco = {
     "base": "Tortilla de maíz",
     "guiso": "Carne asada",
@@ -23,7 +23,7 @@ response = requests.get(url)
 print(response.json())
 
 # PUT /pizzas/1
-print("Editar Taco/1")
+print("\nEditar Taco/1")
 edit_taco = {
     "base": "Tortilla",
     "guiso": "Carne asada",
@@ -38,7 +38,7 @@ response = requests.get(url)
 print(response.json())
 
 # DELETE /pizzas/1
-print("DELETE /pizzas/1")
+print("\nDELETE /pizzas/1")
 response = requests.delete(url + "/1")
 print(response.json())
 
