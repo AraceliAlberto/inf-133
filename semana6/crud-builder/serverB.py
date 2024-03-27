@@ -167,21 +167,12 @@ class TacoHandler(BaseHTTPRequestHandler):
             HTTPDataHandler.handle_response(self, 404, {"Error": "Ruta no existente"})
 
 
-# def run(server_class=HTTPServer, handler_class=TacoHandler, port=8000):
-#     server_address = ("", port)
-#     httpd = server_class(server_address, handler_class)
-#     print(f"Iniciando servidor HTTP en puerto {port}...")
-#     httpd.serve_forever()
+def run(server_class=HTTPServer, handler_class=TacoHandler, port=8000):
+    server_address = ("", port)
+    httpd = server_class(server_address, handler_class)
+    print(f"Iniciando servidor HTTP en puerto {port}...")
+    httpd.serve_forever()
 
-def run_server(port=8000):
-    try:
-        server_address = ("", port)
-        httpd = HTTPServer(server_address, TacoHandler)
-        print(f"Iniciando servidor web en http://localhost:{port}/")
-        httpd.serve_forever()
-    except KeyboardInterrupt:
-        print("Apagando servidor web")
-        httpd.socket.close()
 
 if __name__ == "__main__":
-    run_server()
+    run()
