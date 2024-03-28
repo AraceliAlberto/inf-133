@@ -40,14 +40,12 @@ class Taqueria:
     def __init__(self, builder):
         self.builder = builder
 
-    def __init__(self, builder):
-        self.builder = builder
-
     def create_taco(self, base, guiso, toppings, salsa):
         self.builder.set_base(base)
         self.builder.set_guiso(guiso)
         for topping in toppings:
             self.builder.add_topping(topping)
+        
         self.builder.set_salsa(salsa)
         
         return self.builder.get_taco()

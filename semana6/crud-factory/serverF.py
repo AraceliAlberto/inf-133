@@ -61,9 +61,9 @@ class ChocolateService:
 
     def add_chocolate(self, data):
         tipo_chocolate = data.get("tipo_chocolate", None)
-        peso = data.get("Peso", None)
-        sabor = data.get("Sabor", None)
-        relleno = data.get("Relleno", None)
+        peso = data.get("peso", None)
+        sabor = data.get("sabor", None)
+        relleno = data.get("relleno", None)
 
         fabrica_chocolate = self.factory.create_chocolate(
             tipo_chocolate, peso, sabor, relleno
@@ -142,7 +142,7 @@ class ChocolateRequestHandler(BaseHTTPRequestHandler): #el servidor
     def do_DELETE(self):
         if self.path.startswith("/chocolates/"):
             chocolate_id = int(self.path.split("/")[-1])
-            response_data = self.delivery_service.delete_chocolate(chocolate_id)
+            response_data = self.fabrica_service.delete_chocolate(chocolate_id)
             if response_data:
                 HTTPDataHandler.handle_response(self, 200, response_data)
             else:
