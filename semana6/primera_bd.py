@@ -168,6 +168,3 @@ for row in cursor:
 
 # Cerrar conexión
 conectando.close()
-
-
-#============================================
