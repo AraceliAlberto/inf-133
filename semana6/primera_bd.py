@@ -39,15 +39,18 @@ for row in cursor:
 # (2, 'Licenciatura en Administración', 4)
 
 # Crear tablas de estudiantes
-conectando.execute(
-    """
-    CREATE TABLE ESTUDIANTES
-    (id INTEGER PRIMARY KEY,
-    nombre TEXT NOT NULL,
-    apellido TEXT NOT NULL,
-    fecha_nacimiento DATE NOT NULL);
-    """
-)
+try:
+    conectando.execute(
+        """
+        CREATE TABLE ESTUDIANTES
+        (id INTEGER PRIMARY KEY,
+        nombre TEXT NOT NULL,
+        apellido TEXT NOT NULL,
+        fecha_nacimiento DATE NOT NULL);
+        """
+    )
+except sqlite3.OperationalError:
+    print("La tabla CARRERAS ya existe")
 
 # Insertar datos de estudiantes
 conectando.execute(
@@ -166,5 +169,7 @@ for row in cursor:
 # (1, 1, 1, '2024-01-15')
 # (2, 2, 2, '2024-01-30')
 
+#cnfirmar cambios
+conectando.commit()
 # Cerrar conexión
 conectando.close()
