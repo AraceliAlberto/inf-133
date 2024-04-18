@@ -1,42 +1,43 @@
 from http.server import HTTPServer, BaseHTTPRequestHandler
-import json # intecambio de datos
-
+import json
 from graphene import ObjectType, String, Int, List, Schema, Field, Mutation
+
 
 class Estudiante(ObjectType):
     id = Int()
     nombre = String()
     apellido = String()
     carrera = String()
-    
+
+
 class Query(ObjectType):
+    
     estudiantes = List(Estudiante)
-    #---------------------------------------------------
     estudiante_por_id = Field(Estudiante, id=Int())
-    estudiante_por_carrera = Field(Estudiante, carrera=String())
+    estudiante_por_carrera = List(Estudiante, car=String())
 
     def resolve_estudiantes(root, info):
         return estudiantes
+        
+    def resolve_estudiante_por_carrera(root, info, car):
+        carrera = []
+        for estudiante in estudiantes:
+            if estudiante.carrera == car:
+                carrera.append(estudiante)
+        return carrera
     
-#---------------------------------------------------
     def resolve_estudiante_por_id(root, info, id):
         for estudiante in estudiantes:
             if estudiante.id == id:
                 return estudiante
         return None
-    
-    def resolve_estudiante_por_carrera(root, info, carrera):
-        for estudiante in estudiantes:
-            if estudiante.carrera == carrera:
-                return estudiante
-        return None
-        
-#---------------------------------------------------
+
 class CrearEstudiante(Mutation):
     class Arguments:
         nombre = String()
         apellido = String()
         carrera = String()
+
     estudiante = Field(Estudiante)
 
     def mutate(root, info, nombre, apellido, carrera):
@@ -46,14 +47,14 @@ class CrearEstudiante(Mutation):
             apellido=apellido, 
             carrera=carrera
         )
-        estudiantes.append(nuevo_estudiante) # agregando nuevo est a la lista Estudiantes
+        estudiantes.append(nuevo_estudiante)
 
         return CrearEstudiante(estudiante=nuevo_estudiante)
 
-#--------------------------------------------------------------
 class DeleteEstudiante(Mutation):
     class Arguments:
         id = Int()
+
     estudiante = Field(Estudiante)
 
     def mutate(root, info, id):
@@ -63,19 +64,69 @@ class DeleteEstudiante(Mutation):
                 return DeleteEstudiante(estudiante=estudiante)
         return None
 
-#---------------------------------------------------
+class DeleteEstudiantePorCarrera(Mutation):
+    class Arguments:
+        carrera = String()
+
+    estudiante = List(Estudiante)
+
+    def mutate(root, info, carrera):
+        deleteCarrera = []
+        NoDelete =[]
+        
+        i=0
+        # solucion con while
+        while(i<len(estudiantes)):
+            if estudiantes[i].carrera == carrera:
+                deleteCarrera.append(estudiantes[i]) 
+            else:
+                NoDelete.append(estudiantes[i])
+            i+=1
+            
+        # Solucion numero 2   
+        # for estudiante in estudiantes:
+        #     if estudiante.carrera == carrera:
+        #         deleteCarrera.append(estudiante)
+        #     else:
+        #         NoDelete.append(estudiante)
+        
+        estudiantes[:] = NoDelete    
+        
+        return DeleteEstudiantePorCarrera(estudiante=deleteCarrera)
+
+class ModificarEstudiante(Mutation):
+    class Arguments:
+        id= Int()
+        nombre = String()
+        apellido = String()
+        carrera = String()
+
+    estudiante = Field(Estudiante)
+
+    def mutate(root, info, id, nombre, apellido, carrera):
+        for i, new_estudiante in enumerate(estudiantes):
+            if new_estudiante.id == id:
+                new_estudiante.nombre=nombre 
+                new_estudiante.apellido=apellido 
+                new_estudiante.carrera=carrera
+                return ModificarEstudiante(estudiante = new_estudiante)
+        return None
+
 class Mutations(ObjectType):
     crear_estudiante = CrearEstudiante.Field()
     delete_estudiante = DeleteEstudiante.Field()
-#---------------------------------------------------
+    delete_estudiante_por_carrera = DeleteEstudiantePorCarrera.Field()
+    modificar_estudiante = ModificarEstudiante.Field()
+
 estudiantes = [
     Estudiante(
         id=1, nombre="Pedrito", apellido="García", carrera="Ingeniería de Sistemas"
     ),
     Estudiante(id=2, nombre="Jose", apellido="Lopez", carrera="Arquitectura"),
 ]
-#---------------------------------------------------
-schema = Schema(query=Query)
+
+schema = Schema(query=Query, mutation=Mutations)
+
 
 class GraphQLRequestHandler(BaseHTTPRequestHandler):
     def response_handler(self, status, data):
@@ -89,6 +140,7 @@ class GraphQLRequestHandler(BaseHTTPRequestHandler):
             content_length = int(self.headers["Content-Length"])
             data = self.rfile.read(content_length)
             data = json.loads(data.decode("utf-8"))
+            print(data)
             result = schema.execute(data["query"])
             self.response_handler(200, result.data)
         else:
