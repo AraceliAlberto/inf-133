@@ -12,11 +12,15 @@
                         <div class="content">
                             <p><strong>Nombre: {{ user.first_name }} </strong></p>
                             <p><strong>Apellido: {{ user.last_name }}</strong></p>
+                            <p><strong>Email: {{ user.email }}</strong></p>
+                            <p><strong>Contrasenia: {{ user.contrasenia }}</strong></p>
+                            <p><strong>Fecha Nacimiento: {{ user.fecha }}</strong></p>
+
                             <div class="buttons">
-                                <a href="{{ url_for('user.actualizar', id=user.id) }}" 
-                                class="button is-info">Editar</a>
-                                
-                                <a href="/" class="button is-danger">Eliminar</a>
+                                <a href="{{ url_for('user.actualizar', id=user.id) }}" class="button is-info">Editar</a>
+                                <form action="{{ url_for('user.eliminar', id=user.id) }}" method="POST">
+                                    <button type="submit" class="button is-danger">Eliminar</button>
+                                </form>
                             </div>
                         </div>
                     </div>

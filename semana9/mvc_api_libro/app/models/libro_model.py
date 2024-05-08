@@ -1,8 +1,5 @@
 from database import db
 
-
-# Define la clase `libro` que hereda de `db.Model`
-# `libro` representa la tabla `libros` en la base de datos
 class Libro(db.Model):
     __tablename__ = "libros"
 

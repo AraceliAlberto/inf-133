@@ -5,10 +5,16 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String(50), nullable=False)
     last_name = db.Column(db.String(50), nullable=False)
+    email = db.Column(db.String(50), nullable = False)
+    contrasenia = db.Column(db.String(50), nullable = False)
+    fecha = db.Column(db.Date, nullable=False)
 
-    def __init__(self, first_name, last_name):
+    def __init__(self, first_name, last_name, email, contrasenia, fecha):
         self.first_name = first_name
         self.last_name = last_name
+        self.email = email
+        self.contrasenia = contrasenia
+        self.fecha = fecha
 
     def save(self):
         db.session.add(self)
@@ -28,5 +34,5 @@ class User(db.Model):
 
 # Elimina usuario
     def delete(self):
-        db.session.clear()
+        db.session.delete(self)
         db.session.commit()

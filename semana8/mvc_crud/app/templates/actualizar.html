@@ -18,6 +18,31 @@
             required class="input" value="{{ user.last_name }}">
         </div>
     </div>
+
+    <div class="field">
+        <label for="email">Email:</label>
+        <div class="control">
+            <input type="email" id="email" name="email" 
+            required class="input" value="{{ user.email }}">
+        </div>
+    </div>
+
+    <div class="field">
+        <label for="contrasenia">Contrasenia:</label>
+        <div class="control">
+            <input type="password" id="contrasenia" name="contrasenia" 
+            required class="input" value="{{ user.contrasenia }}">
+        </div>
+    </div>
+
+    <div class="field">
+        <label for="fecha_Nacimiento">Fecha de Nacimiento:</label>
+        <div class="control">
+            <input type="date" id="fecha_Nacimiento" name="fecha_Nacimiento" 
+            required class="input" value="{{ user.fecha_Nacimiento }}">
+        </div>
+    </div>
+
     <input type="submit" value="Actualizar" class="button is-primary">
 
 {% endblock %}

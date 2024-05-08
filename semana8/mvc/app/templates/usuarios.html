@@ -4,8 +4,7 @@
 <h2>Lista de Usuarios</h2>
 <ul>
     {% for user in users %} <!-- esta clase tiene algo llamado user -->
-        <li>{{ user.first_name }} {{ user.last_name }}</li>
-        <li>{{ user.email }} {{ user.contrasenia }} {{ user.fecha }}</li>
+        <li>{{ user.first_name }} {{ user.last_name }} {{ user.email }} {{ user.contrasenia }} {{ user.fecha }}</li>
     {% endfor %}
 </ul>
 {% endblock %}
