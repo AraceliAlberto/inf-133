@@ -1,0 +1,292 @@
+
+{
+    "openapi": "3.0.1",
+    "info": {
+        "title": "Libreria API",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/libros": {
+            "get": {
+                "summary": "Obtiene la lista de todos los libros",
+                "security": [
+                    {
+                        "JWTAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de libros",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/libro"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "summary": "Crea un nuevo libro",
+                "security": [
+                    {
+                        "JWTAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/libro"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "libro creado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/libro"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/libros/{id}": {
+            "get": {
+                "summary": "Obtiene un libro específico por su ID",
+                "security": [
+                    {
+                        "JWTAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Detalles del libro",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/libro"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "libro no encontrado"
+                    }
+                }
+            },
+            "put": {
+                "summary": "Actualiza un libro existente por su ID",
+                "security": [
+                    {
+                        "JWTAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/libro"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "libro actualizado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/libro"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "libro no encontrado"
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Elimina un libro existente por su ID",
+                "security": [
+                    {
+                        "JWTAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "libro eliminado"
+                    },
+                    "404": {
+                        "description": "libro no encontrado"
+                    }
+                }
+            }
+        },
+        "/api/register": {
+            "post": {
+                "summary": "Registra un nuevo usuario",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/User"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Usuario creado"
+                    },
+                    "400": {
+                        "description": "Solicitud incorrecta"
+                    }
+                }
+            }
+        },
+        "/api/login": {
+            "post": {
+                "summary": "Inicia sesión con un usuario existente",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Login"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Inicio de sesión exitoso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "access_token": {
+                                            "type": "string",
+                                            "description": "Token de acceso JWT para el usuario"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Credenciales inválidas"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "JWTAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        },
+        "schemas": {
+            "libro": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": true
+                    },
+                    "titulo": {
+                        "type": "string"
+                    },
+                    "autor": {
+                        "type": "string"
+                    },
+                    "edicion": {
+                        "type": "integer"
+                    },
+                    "disponibilidad": {
+                        "type": "boolean"
+                    }
+                },
+                "required": [
+                    "titulo",
+                    "autor",
+                    "edicion",
+                    "disponibilidad"
+                ]
+            },
+            "User": {
+                "type": "object",
+                "properties": {
+                    "username": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "username",
+                    "password"
+                ]
+            },
+            "Login": {
+                "type": "object",
+                "properties": {
+                    "username": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "username",
+                    "password"
+                ]
+            }
+        }
+    }
+}
