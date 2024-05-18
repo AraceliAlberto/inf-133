@@ -1,0 +1,43 @@
+{% extends 'base.html' %} <!-- herencia de Base -->
+
+{% block content %}
+<h2 class="subtitle is-2">Registrar Usuario</h2>
+<form method="post">
+    <div> class="field">
+        <label for="nombre">Nombre:</label>
+        <div class="control">
+            <input type="text" id="nombre" name="nombre" required class="input">
+        </div>
+    </div>
+
+    <div> class="field">
+        <label for="email">Email:</label>
+        <div class="control">
+            <input type="email" id="email" name="email" required class="input">
+        </div>
+    </div>
+
+    <div> class="field">
+        <label for="usuario">Usuario:</label>
+        <div class="control">
+            <input type="text" id="usuario" name="usuario" required class="input">
+        </div>
+    </div>
+
+    <div> class="field">
+        <label for="password">Contrasenia:</label>
+        <div class="control">
+            <input type="password" id="password" name="password" required class="input">
+        </div>
+    </div>
+
+    <div> class="field">
+        <label for="fecha_Nacimiento">Fecha de nacimiento:</label>
+        <div class="control">
+            <input type="date" id="fecha_Nacimiento" name="fecha_Nacimiento" required class="input">
+        </div>
+    </div>
+
+    <input type="submit" value="Registrar">
+</form>
+{% endblock %}
