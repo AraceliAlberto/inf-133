@@ -1,14 +1,13 @@
-
 {
     "openapi": "3.0.1",
     "info": {
-        "title": "Libreria API",
+        "title": "API de Dulces",
         "version": "1.0.0"
     },
     "paths": {
         "/api/dulces": {
             "get": {
-                "summary": "Obtiene la lista de todos los dulces",
+                "summary": "Obtiene la lista de todos los Dulces",
                 "security": [
                     {
                         "JWTAuth": []
@@ -16,13 +15,13 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Lista de dulces",
+                        "description": "Lista de Dulces",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "type": "array",
                                     "items": {
-                                        "$ref": "#/components/schemas/dulce"
+                                        "$ref": "#/components/schemas/Dulce"
                                     }
                                 }
                             }
@@ -31,7 +30,7 @@
                 }
             },
             "post": {
-                "summary": "Crea un nuevo dulce",
+                "summary": "Crea un nuevo Dulce",
                 "security": [
                     {
                         "JWTAuth": []
@@ -41,18 +40,18 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/dulce"
+                                "$ref": "#/components/schemas/Dulce"
                             }
                         }
                     }
                 },
                 "responses": {
                     "201": {
-                        "description": "dulce creado",
+                        "description": "Dulce creado",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/dulce"
+                                    "$ref": "#/components/schemas/Dulce"
                                 }
                             }
                         }
@@ -62,7 +61,7 @@
         },
         "/api/dulces/{id}": {
             "get": {
-                "summary": "Obtiene un dulce específico por su ID",
+                "summary": "Obtiene un Dulce específico por su ID",
                 "security": [
                     {
                         "JWTAuth": []
@@ -80,22 +79,22 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Detalles del dulce",
+                        "description": "Detalles del Dulce",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/dulce"
+                                    "$ref": "#/components/schemas/Dulce"
                                 }
                             }
                         }
                     },
                     "404": {
-                        "description": "dulce no encontrado"
+                        "description": "Dulce no encontrado"
                     }
                 }
             },
             "put": {
-                "summary": "Actualiza un dulce existente por su ID",
+                "summary": "Actualiza un Dulce existente por su ID",
                 "security": [
                     {
                         "JWTAuth": []
@@ -115,29 +114,29 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/dulce"
+                                "$ref": "#/components/schemas/Dulce"
                             }
                         }
                     }
                 },
                 "responses": {
                     "200": {
-                        "description": "dulce actualizado",
+                        "description": "Dulce actualizado",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/dulce"
+                                    "$ref": "#/components/schemas/Dulce"
                                 }
                             }
                         }
                     },
                     "404": {
-                        "description": "dulce no encontrado"
+                        "description": "Dulce no encontrado"
                     }
                 }
             },
             "delete": {
-                "summary": "Elimina un dulce existente por su ID",
+                "summary": "Elimina un Dulce existente por su ID",
                 "security": [
                     {
                         "JWTAuth": []
@@ -155,10 +154,10 @@
                 ],
                 "responses": {
                     "204": {
-                        "description": "dulce eliminado"
+                        "description": "Dulce eliminado"
                     },
                     "404": {
-                        "description": "dulce no encontrado"
+                        "description": "Dulce no encontrado"
                     }
                 }
             }
@@ -181,6 +180,101 @@
                     },
                     "400": {
                         "description": "Solicitud incorrecta"
+                    }
+                }
+            }
+        },
+        "/api/users":{
+            "get": {
+                "summary": "Obtiene la lista de todos los Usuarios",
+                "security": [
+                    {
+                        "JWTAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de Usuarios",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/User"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/users/{id}": {
+            "put": {
+                "summary": "Actualiza un Usuario existente por su ID",
+                "security": [
+                    {
+                        "JWTAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/User"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Usuario actualizado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Usuario no encontrado"
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Elimina un Usuario existente por su ID",
+                "security": [
+                    {
+                        "JWTAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Usuario eliminado"
+                    },
+                    "404": {
+                        "description": "Usuario no encontrado"
                     }
                 }
             }
@@ -230,7 +324,7 @@
             }
         },
         "schemas": {
-            "dulce": {
+            "Dulce": {
                 "type": "object",
                 "properties": {
                     "id": {
@@ -241,13 +335,14 @@
                         "type": "string"
                     },
                     "peso": {
-                        "type": "string"
+                        "type": "number",
+                        "format": "float"
                     },
                     "sabor": {
-                        "type": "float"
+                        "type": "string"
                     },
                     "origen": {
-                        "type": "boolean"
+                        "type": "string"
                     }
                 },
                 "required": [
@@ -267,13 +362,20 @@
                         "type": "string"
                     },
                     "roles":{
-                        "type": "string"
+                        "type":"array",
+                        "items":{
+                            "type":"string",
+                            "enum":[
+                                "admin",
+                                "user"
+                            ]
+                        }
                     }
                 },
                 "required": [
                     "username",
                     "password",
-                    "roles"
+                    "role"
                 ]
             },
             "Login": {
@@ -284,15 +386,11 @@
                     },
                     "password": {
                         "type": "string"
-                    },
-                    "roles":{
-                        "type": "string"
                     }
                 },
                 "required": [
                     "username",
-                    "password",
-                    "roles"
+                    "password"
                 ]
             }
         }

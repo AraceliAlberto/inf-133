@@ -4,7 +4,7 @@ from werkzeug.security import check_password_hash
 from views import user_view
 from models.user_model import User
 from datetime import datetime
-
+#Controller se encarga del manejo de rutas (un modelo de enlace)
 user_bp = Blueprint("user", __name__)
 
 @user_bp.route("/")

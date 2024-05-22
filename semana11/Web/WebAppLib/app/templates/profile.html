@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2 class="subtitle is-2">Perfil del Usuario</h2>
+<div class="card">
+    <div class="card-content">
+        <div class="content">
+            <p><strong>Nombre:</strong> {{ user.first_name }}</p>
+            <p><strong>Nombre de Usuario:</strong> {{ user.username }}</p>
+            <p><strong>Email:</strong> {{ user.email }}</p>
+            <p><strong>password:</strong> {{ user.password }}</p>
+            <p><strong>Fecha Nacimiento:</strong> {{ user.fecha }}</p>
+            <p><strong>Tu Rol es:</strong> {{ user.role }}</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
