@@ -1,0 +1,22 @@
+PRUEBAS FUNCIONALES:
+
+PRUEBAS NO FUNCIONALES:
+verifica si las respuestas son rapidas
+
+pruebas unitaria: se encarga de testear una sola cosa
+pruebas de integracion: 2 cosas que esten funcionando, integrados y funcionen sin problema
+pruebas de sistemas: tecnical gray 
+aceptacion: si el software cumple con los criterios de aceptacion
+regresion: verificacion de cambios para no afectar el codigo y este siga funcionando correctamente
+carga: escalador horizonta mas servidores, memoria y vertical mas .....
+seguridad: buscar vulnerabilidades
+usabilidiad: encargados de la parte grafica y esto sea entendible para el usuario
+rendimiento: tiempo de respuesta y escabilidad
+manual: (qua) hacer pruebas paso a paso sin herramientas
+automatizadas: hacer pruebas con herramientas
+exploratorias: probar el sistemas, conocer el terreno
+
+--> Pytest
+es un framework, se usa para hacer pruebas unitarias y de integracion de forma sencilla y eficiente
+
+
